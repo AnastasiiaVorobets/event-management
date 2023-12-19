@@ -2,6 +2,24 @@
 
 ## About the project
 
+#### Home Page
+- On the main page, by clicking on the `Explore Events` button, we go to the events page.
+
+#### Events Page
+- On the page we see a list of all events that are displayed from the database.
+- We can filter events by searching by title.
+- We can sort events by date and by title (descending and ascending).
+- By clicking on the `Create Event` button, we can create a new event that is stored in the database.(There are validation rules for creating an event).
+- Each event card includes basic information about the event and has three buttons (delete, edit, and view details).
+- Clicking on the `Edit` button opens a window with the current data that we can change and save.
+- By clicking on the `Delete` button, a window opens where we have to confirm that we want to delete this card, after which it is deleted from the page and the database.
+- By clicking on the `View Details` button, we go to the `events/{event.id}`page where there are all the details about the selected card.
+- By clicking on the `Go to home page` button, we can return to the home page.
+- We also see the google map, but unfortunately we can't do anything with it yet:(
+
+#### EventDatails Page
+- On the page we see all the details about the selected card.
+- By clicking on the `Go back to events` button, we return to the page with events.
 
 ## Technologies
 - Node v20.10.0
