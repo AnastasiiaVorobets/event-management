@@ -4,7 +4,6 @@ import { EventsModule } from './events/events.module';
 
 @Module({
   imports: [
-     // TypeORM configuration for PostgreSQL
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: 'localhost',
