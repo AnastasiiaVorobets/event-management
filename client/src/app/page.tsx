@@ -1,17 +1,21 @@
 import Link from 'next/link';
 import { Typography, Button, Container, Box } from '@mui/material';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
-const Page = () => {
+const HomePage = () => {
   return (
     <Container maxWidth="sm">
-      <Box mt={10}>
-        <Typography variant="h2" align="center" gutterBottom>
-          Hi there!
+      <Box mt={10} textAlign="center">
+        <Typography variant="h2" gutterBottom>
+          Welcome!
         </Typography>
-        <Box display="flex" justifyContent="center">
+        <Typography variant="body1" paragraph>
+          Discover exciting events near you and connect with a community of enthusiasts.
+        </Typography>
+        <Box mt={3}>
           <Link href="/events" passHref>
-            <Button variant="contained" color="primary">
-              Go to List
+            <Button variant="contained" color="primary" endIcon={<ArrowForwardIcon />}>
+              Explore Events
             </Button>
           </Link>
         </Box>
@@ -20,4 +24,4 @@ const Page = () => {
   );
 };
 
-export default Page;
+export default HomePage;

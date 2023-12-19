@@ -1,13 +1,18 @@
 "use client";
 import React, { useState, useEffect } from 'react';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import EventList from '../components/EventList';
 import CreateEventButton from '../components/CreateEventButton';
 import DeleteConfirmationDialog from '../components/DeleteConfirmationDialog';
 import EventForm from '../components/EventForm';
 import Event from '../lib/definitions';
-import Button from '@mui/material/Button';
-import { useRouter } from 'next/navigation';
 import EventPage from './[eventId]/page';
+import Link from 'next/link';
 
 const EventListPage: React.FC = () => {
   const [events, setEvents] = useState<Event[]>([]);
@@ -17,8 +22,6 @@ const EventListPage: React.FC = () => {
   const [sortField, setSortField] = useState<'date' | 'category' | 'title'>('date');
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
   const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
-  const router = useRouter();
-
 
   useEffect(() => {
     const fetchData = async () => {
@@ -79,7 +82,7 @@ const EventListPage: React.FC = () => {
 
   const sortedEvents = [...events].sort((a, b) => {
     let compareResult;
-  
+
     switch (sortField) {
       case 'date':
         compareResult = new Date(a.date).getTime() - new Date(b.date).getTime();
@@ -93,13 +96,34 @@ const EventListPage: React.FC = () => {
       default:
         compareResult = 0;
     }
-  
+
     return sortOrder === 'asc' ? compareResult : -compareResult;
   });
 
-  /* const handleViewDetailsClick = (eventId: number) => {
-    router.push(`/events/${eventId}`);
-  }; */
+  const renderSortButton = (field: 'title' | 'date', label: string) => (
+    <Button
+      variant="outlined"
+      color="primary"
+      style={{
+        margin: '20px 0',
+        marginRight: '15px',
+        borderRadius: '10px',
+      }}
+      onClick={() => handleSort(field)}
+      endIcon={
+        sortField === field ? (
+          sortOrder === 'asc' ? (
+            <ArrowDropDownIcon />
+          ) : (
+            <ArrowDropUpIcon />
+          )
+        ) : null
+      }
+    >
+      {label}
+    </Button>
+  );
+  
 
   const handleViewDetailsClick = (eventId: number) => {
     const selected = events.find((event) => event.id === eventId) || null;
@@ -107,19 +131,27 @@ const EventListPage: React.FC = () => {
   };
 
   return (
-    <div>
+    <Box p={4}>
       {selectedEvent ? (
         <EventPage selectedEvent={selectedEvent} />
       ) : (
         <>
-          <h1>Event List</h1>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <Typography variant="h1" gutterBottom>
+              Event List
+            </Typography>
+            <Link href="/">
+              <Button variant="contained" color="primary" startIcon={<ArrowBackIcon />}>
+                Go to Home Page
+              </Button>
+            </Link>
+          </div>
           <CreateEventButton onClick={() => setIsFormOpen(true)} />
 
-          <div>
-            <Button onClick={() => handleSort('title')}>Sort by Title</Button>
-            <Button onClick={() => handleSort('date')}>Sort by Date</Button>
-            <Button onClick={() => handleSort('category')}>Sort by Category</Button>
-          </div>
+          <Box mt={2} display="flex" justifyContent="start">
+            {renderSortButton('title', 'Sort by Title')}
+            {renderSortButton('date', 'Sort by Date')}
+          </Box>
 
           <EventList
             events={sortedEvents}
@@ -148,7 +180,7 @@ const EventListPage: React.FC = () => {
           />
         </>
       )}
-    </div>
+    </Box>
   );
 };
 

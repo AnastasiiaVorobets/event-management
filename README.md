@@ -18,6 +18,7 @@
 - cd client
 - npm install
 - npm install @mui/material @emotion/react @emotion/styled
+- npm install @mui/icons-material
 - npm run dev
 - Open `http://localhost:3000/`
 
