@@ -10,8 +10,8 @@ import EventList from '../components/EventList';
 import CreateEventButton from '../components/CreateEventButton';
 import DeleteConfirmationDialog from '../components/DeleteConfirmationDialog';
 import EventForm from '../components/EventForm';
+import Map from '../components/Map';
 import Event from '../lib/definitions';
-import EventPage from './[eventId]/page';
 import Link from 'next/link';
 import { sortEvents } from '../lib/sortUtils';
 import { filterEvents } from '../lib/filterUtils';
@@ -23,7 +23,6 @@ const EventListPage: React.FC = () => {
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [sortField, setSortField] = useState<'date' | 'category' | 'title'>('date');
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
-  const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
   const [filterText, setFilterText] = useState<string>('');
 
   const sortedEvents = sortEvents(events, sortField, sortOrder);
@@ -90,11 +89,6 @@ const EventListPage: React.FC = () => {
     setFilterText(text);
   };
 
-  const handleViewDetailsClick = (eventId: number) => {
-    const selected = events.find((event) => event.id === eventId) || null;
-    setSelectedEvent(selected);
-  };
-
   const renderSortButton = (field: 'title' | 'date', label: string) => (
     <Button
       variant="outlined"
@@ -108,9 +102,9 @@ const EventListPage: React.FC = () => {
       endIcon={
         sortField === field ? (
           sortOrder === 'asc' ? (
-            <ArrowDropDownIcon />
-          ) : (
             <ArrowDropUpIcon />
+          ) : (
+            <ArrowDropDownIcon />
           )
         ) : null
       }
@@ -118,75 +112,76 @@ const EventListPage: React.FC = () => {
       {label}
     </Button>
   );
-
+  
+  const handleMarkerClick = (event: any) => {
+    console.log('Marker clicked:', event);
+  };
+  
   return (
     <Box p={4}>
-      {selectedEvent ? (
-        <EventPage selectedEvent={selectedEvent} />
-      ) : (
-        <>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <Typography variant="h2" gutterBottom>
-              Events
-            </Typography>
-            <Link href="/">
-              <Button variant="contained" color="primary" startIcon={<ArrowBackIcon />}>
-                Go to Home Page
-              </Button>
-            </Link>
-          </div>
-          <CreateEventButton onClick={() => setIsFormOpen(true)} />
+      <>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <Typography variant="h2" gutterBottom>
+            Events
+          </Typography>
+          <Link href="/">
+            <Button variant="contained" color="primary" startIcon={<ArrowBackIcon />}>
+              Go to Home Page
+            </Button>
+          </Link>
+        </div>
+        <CreateEventButton onClick={() => setIsFormOpen(true)} />
 
-          <Box mt={2} display="flex" justifyContent="space-between">
-            <input
-              type="text"
-              placeholder="Filter by Title"
-              value={filterText}
-              onChange={(e) => handleFilterChange(e.target.value)}
-              style={{
-                marginLeft: '10px',
-                padding: '8px',
-                borderRadius: '5px',
-                border: '1px solid #ccc',
-                width: '200px',
-                height: '30px',
-                margin: '20px 0',
-              }}
-            />
-
-            <div>
-              {renderSortButton('title', 'Sort by Title')}
-              {renderSortButton('date', 'Sort by Date')}
-            </div>
-          </Box>
-
-          <EventList
-            events={filteredEvents}
-            onDeleteClick={handleDeleteClick}
-            onEditClick={handleEditClick}
-            onViewDetailsClick={handleViewDetailsClick}
-          />
-
-          <DeleteConfirmationDialog
-            open={deleteEventId !== null}
-            onClose={() => setDeleteEventId(null)}
-            onConfirm={handleDeleteConfirm}
-          />
-
-          <EventForm
-            open={isFormOpen}
-            onClose={handleFormClose}
-            onSubmit={(submittedEvent) => {
-              const updatedEvents = editEvent
-                ? events.map((e) => (e.id === submittedEvent.id ? submittedEvent : e))
-                : [...events, submittedEvent];
-
-              setEvents(updatedEvents);
+        <Box mt={2} display="flex" justifyContent="space-between">
+          <input
+            type="text"
+            placeholder="Filter by Title"
+            value={filterText}
+            onChange={(e) => handleFilterChange(e.target.value)}
+            style={{
+              marginLeft: '10px',
+              padding: '8px',
+              borderRadius: '5px',
+              border: '1px solid #ccc',
+              width: '200px',
+              height: '30px',
+              margin: '20px 0',
             }}
-            eventToEdit={editEvent}
           />
-        </>
-      )}
+
+          <div>
+            {renderSortButton('title', 'Sort by Title')}
+            {renderSortButton('date', 'Sort by Date')}
+          </div>
+        </Box>
+
+        <EventList
+          events={filteredEvents}
+          onDeleteClick={handleDeleteClick}
+          onEditClick={handleEditClick}
+        />
+
+        <DeleteConfirmationDialog
+          open={deleteEventId !== null}
+          onClose={() => setDeleteEventId(null)}
+          onConfirm={handleDeleteConfirm}
+        />
+
+        <EventForm
+          open={isFormOpen}
+          onClose={handleFormClose}
+          onSubmit={(submittedEvent) => {
+            const updatedEvents = editEvent
+              ? events.map((e) => (e.id === submittedEvent.id ? submittedEvent : e))
+              : [...events, submittedEvent];
+
+            setEvents(updatedEvents);
+          }}
+          eventToEdit={editEvent}
+        />
+
+        <Map events={filteredEvents} onMarkerClick={handleMarkerClick} />
+      </>
     </Box>
   );
 };

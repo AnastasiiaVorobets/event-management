@@ -19,6 +19,9 @@
 - npm install
 - npm install @mui/material @emotion/react @emotion/styled
 - npm install @mui/icons-material
+- npm install @react-google-maps/api
+- npm install google-map-reactnpm install --save-dev @types/google-map-react
+- npm install --save-dev @types/google-map-react
 - npm run dev
 - Open `http://localhost:3000/`
 

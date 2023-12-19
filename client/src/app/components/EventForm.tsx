@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Event from '../lib/definitions';
 import { getCurrentDateTime } from '../lib/getCurrentDateTime';
-import { formatToISOString } from '../lib/formattedDate';
+import { formatToISOString } from '../lib/formatToISOString';
 import { validateForm } from '../lib/validation';
 import {
   TextField,
