@@ -23,8 +23,8 @@
 
 ## Technologies
 - Node v20.10.0
-- Next.js
-- Nest.js
+- Next.js v14.0.4
+- Nest.js v10.3.0
 - PostgresSQL
 - Material UI
 
