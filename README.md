@@ -1,4 +1,4 @@
-- [Loom]()
+- [Loom](https://www.loom.com/share/2d0b19aae68b48c6bc0e82bcf67301c3?sid=1af4794b-d0c3-4c42-a6a9-67ab0c8c6918)
 
 ## About the project
 
@@ -40,6 +40,7 @@
 - npm install @react-google-maps/api
 - npm install google-map-reactnpm install --save-dev @types/google-map-react
 - npm install --save-dev @types/google-map-react
+- npm install framer-motion
 - npm run dev
 - Open `http://localhost:3000/`
 
