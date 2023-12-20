@@ -161,7 +161,10 @@ const EventListPage: React.FC = () => {
           onConfirm={handleDeleteConfirm}
         />
 
-        <EventForm open={isFormOpen} onClose={handleFormClose} onSubmit={(submittedEvent) => {
+        <EventForm
+          open={isFormOpen}
+          onClose={handleFormClose}
+          onSubmit={(submittedEvent) => {
           const updatedEvents = updateEvents(events, submittedEvent, editEvent);
           setEvents(updatedEvents);
         }} eventToEdit={editEvent} />
