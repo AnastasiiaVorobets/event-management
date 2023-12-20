@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import GoogleMapReact from 'google-map-react';
+import { useEffect, useState } from 'react';
 import Event from '../lib/definitions';
+import GoogleMapReact from 'google-map-react';
 
 interface MapProps {
   events: Event[];

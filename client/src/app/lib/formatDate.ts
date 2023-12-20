@@ -6,5 +6,6 @@ export const formatDate = (dateString: string): string => {
     hour: 'numeric',
     minute: 'numeric',
   });
+
   return formattedDate;
 };

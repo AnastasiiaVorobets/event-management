@@ -1,20 +1,23 @@
 "use client";
-import React, { useState, useEffect } from 'react';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { useState, useEffect } from 'react';
+import Link from 'next/link';
+
 import EventList from '../components/EventList';
 import CreateEventButton from '../components/CreateEventButton';
+import SortButton from '../components/SortButton';
 import DeleteConfirmationDialog from '../components/DeleteConfirmationDialog';
 import EventForm from '../components/EventForm';
+import EventDetails from '../components/EventDetails';
 import Map from '../components/Map';
+import FilterInput from '../components/FilterInput';
+
 import Event from '../lib/definitions';
-import Link from 'next/link';
 import { sortEvents } from '../lib/sortUtils';
 import { filterEvents } from '../lib/filterUtils';
+import { updateEvents } from '../lib/updateEvents';
+
+import { Button, Typography, Box } from '@mui/material';
+import { ArrowBack } from '@mui/icons-material';
 
 const EventListPage: React.FC = () => {
   const [events, setEvents] = useState<Event[]>([]);
@@ -24,6 +27,7 @@ const EventListPage: React.FC = () => {
   const [sortField, setSortField] = useState<'date' | 'category' | 'title'>('date');
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
   const [filterText, setFilterText] = useState<string>('');
+  const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
 
   const sortedEvents = sortEvents(events, sortField, sortOrder);
   const filteredEvents = filterEvents(sortedEvents, filterText);
@@ -90,42 +94,45 @@ const EventListPage: React.FC = () => {
   };
 
   const renderSortButton = (field: 'title' | 'date', label: string) => (
-    <Button
-      variant="outlined"
-      color="primary"
-      style={{
-        margin: '20px 0',
-        marginRight: '15px',
-        borderRadius: '10px',
-      }}
-      onClick={() => handleSort(field)}
-      endIcon={
-        sortField === field ? (
-          sortOrder === 'asc' ? (
-            <ArrowDropUpIcon />
-          ) : (
-            <ArrowDropDownIcon />
-          )
-        ) : null
-      }
-    >
-      {label}
-    </Button>
+    <SortButton
+      field={field}
+      label={label}
+      sortField={sortField}
+      sortOrder={sortOrder}
+      onClick={handleSort}
+    />
   );
-  
+
   const handleMarkerClick = (event: any) => {
     console.log('Marker clicked:', event);
   };
-  
+
+  const handleDetailsClick = (event: Event) => {
+    setSelectedEvent(event);
+  };
+
+  const handleCloseDetails = () => {
+    setSelectedEvent(null);
+  };
+
   return (
     <Box p={4}>
       <>
+        {selectedEvent && (
+          <EventDetails
+            selectedEvent={selectedEvent}
+            onClose={handleCloseDetails}
+            onEditClick={handleEditClick}
+            onDeleteClick={handleDeleteClick}
+          />
+        )}
+
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <Typography variant="h2" gutterBottom>
             Events
           </Typography>
           <Link href="/">
-            <Button variant="contained" color="primary" startIcon={<ArrowBackIcon />}>
+            <Button variant="contained" color="primary" startIcon={<ArrowBack />}>
               Go to Home Page
             </Button>
           </Link>
@@ -133,21 +140,7 @@ const EventListPage: React.FC = () => {
         <CreateEventButton onClick={() => setIsFormOpen(true)} />
 
         <Box mt={2} display="flex" justifyContent="space-between">
-          <input
-            type="text"
-            placeholder="Filter by Title"
-            value={filterText}
-            onChange={(e) => handleFilterChange(e.target.value)}
-            style={{
-              marginLeft: '10px',
-              padding: '8px',
-              borderRadius: '5px',
-              border: '1px solid #ccc',
-              width: '200px',
-              height: '30px',
-              margin: '20px 0',
-            }}
-          />
+          <FilterInput value={filterText} onChange={handleFilterChange} />
 
           <div>
             {renderSortButton('title', 'Sort by Title')}
@@ -159,6 +152,7 @@ const EventListPage: React.FC = () => {
           events={filteredEvents}
           onDeleteClick={handleDeleteClick}
           onEditClick={handleEditClick}
+          onDetailsClick={handleDetailsClick}
         />
 
         <DeleteConfirmationDialog
@@ -167,18 +161,10 @@ const EventListPage: React.FC = () => {
           onConfirm={handleDeleteConfirm}
         />
 
-        <EventForm
-          open={isFormOpen}
-          onClose={handleFormClose}
-          onSubmit={(submittedEvent) => {
-            const updatedEvents = editEvent
-              ? events.map((e) => (e.id === submittedEvent.id ? submittedEvent : e))
-              : [...events, submittedEvent];
-
-            setEvents(updatedEvents);
-          }}
-          eventToEdit={editEvent}
-        />
+        <EventForm open={isFormOpen} onClose={handleFormClose} onSubmit={(submittedEvent) => {
+          const updatedEvents = updateEvents(events, submittedEvent, editEvent);
+          setEvents(updatedEvents);
+        }} eventToEdit={editEvent} />
 
         <Map events={filteredEvents} onMarkerClick={handleMarkerClick} />
       </>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Event from '../lib/definitions';
 import { getCurrentDateTime } from '../lib/getCurrentDateTime';
 import { formatToISOString } from '../lib/formatToISOString';
@@ -85,9 +85,11 @@ const EventForm: React.FC<EventFormProps> = ({ open, onClose, onSubmit, eventToE
       const submittedEvent = await response.json();
       onSubmit(submittedEvent);
     }
-  } catch (error: any) {
+  }
+  catch (error: any) {
     console.error('Error submitting event form:', error.message);
-  } finally {
+  }
+  finally {
     onClose();
   };
 };
