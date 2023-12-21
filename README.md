@@ -15,13 +15,9 @@
 - Each event card includes basic information about the event and has three buttons (delete, edit, and view details).
 - Clicking on the `Edit` button opens a window with the current data that we can change and save.
 - By clicking on the `Delete` button, a window opens where we have to confirm that we want to delete this card, after which it is deleted from the page and the database.
-- By clicking on the `View Details` button, we go to the `events/{event.id}`page where there are all the details about the selected card.
+- By clicking on the `View Details` button, we can see more details about our event
 - By clicking on the `Go to home page` button, we can return to the home page.
 - We also see the google map, but unfortunately we can't do anything with it yet:(
-
-#### EventDatails Page
-- On the page we see all the details about the selected card.
-- By clicking on the `Go back to events` button, we return to the page with events.
 
 ## Technologies
 - Node v20.10.0
