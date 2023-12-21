@@ -23,7 +23,7 @@
 - Node v20.10.0
 - Next.js v14.0.4
 - Nest.js v10.3.0
-- PostgresSQL
+- PostgreSQL
 - Material UI
 
 ## To run the project
