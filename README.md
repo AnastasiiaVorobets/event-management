@@ -15,7 +15,7 @@
 - Each event card includes basic information about the event and has three buttons (delete, edit, and view details).
 - Clicking on the `Edit` button opens a window with the current data that we can change and save.
 - By clicking on the `Delete` button, a window opens where we have to confirm that we want to delete this card, after which it is deleted from the page and the database.
-- By clicking on the `View Details` button, we can see more details about our event
+- By clicking on the `View Details` button, we can see more details about our event and recommended events.
 - By clicking on the `Go to home page` button, we can return to the home page.
 - We also see the google map, but unfortunately we can't do anything with it yet:(
 

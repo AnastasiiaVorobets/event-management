@@ -15,6 +15,7 @@ import Event from '../lib/definitions';
 import { sortEvents } from '../lib/sortUtils';
 import { filterEvents } from '../lib/filterUtils';
 import { updateEvents } from '../lib/updateEvents';
+import { recommendEventsAlgorithm } from '../lib/recommendEventsAlgorithm';
 
 import { Button, Typography, Box } from '@mui/material';
 import { ArrowBack } from '@mui/icons-material';
@@ -28,6 +29,7 @@ const EventListPage: React.FC = () => {
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
   const [filterText, setFilterText] = useState<string>('');
   const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
+  const [recommendedEvents, setRecommendedEvents] = useState<Event[]>([]);
 
   const sortedEvents = sortEvents(events, sortField, sortOrder);
   const filteredEvents = filterEvents(sortedEvents, filterText);
@@ -109,6 +111,8 @@ const EventListPage: React.FC = () => {
 
   const handleDetailsClick = (event: Event) => {
     setSelectedEvent(event);
+    const recommendedEvents = recommendEventsAlgorithm(event, events);
+    setRecommendedEvents(recommendedEvents);
   };
 
   const handleCloseDetails = () => {
@@ -124,6 +128,8 @@ const EventListPage: React.FC = () => {
             onClose={handleCloseDetails}
             onEditClick={handleEditClick}
             onDeleteClick={handleDeleteClick}
+            recommendedEvents={recommendedEvents}
+            onDetailsClick={handleDetailsClick}
           />
         )}
 
