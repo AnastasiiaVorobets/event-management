@@ -1,6 +1,7 @@
+- [Updated solution overview]()
+
 - [An overview of the solution](https://www.loom.com/share/2d0b19aae68b48c6bc0e82bcf67301c3?sid=1af4794b-d0c3-4c42-a6a9-67ab0c8c6918)
 
-- [https://www.loom.com/share/2d0b19aae68b48c6bc0e82bcf67301c3?sid=1af4794b-d0c3-4c42-a6a9-67ab0c8c6918](https://www.loom.com/share/2d0b19aae68b48c6bc0e82bcf67301c3?sid=1af4794b-d0c3-4c42-a6a9-67ab0c8c6918)
 
 ## About the project
 

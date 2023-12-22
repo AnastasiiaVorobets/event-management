@@ -30,10 +30,11 @@ export const recommendEventsAlgorithm = (baseEvent: Event, allEvents: Event[]): 
   });
 
   const sortedSimilarities = eventSimilarities.sort((a, b) => {
-    if (a.event.category && b.event.category) {
-      return b.overallSimilarity !== a.overallSimilarity
-        ? b.overallSimilarity - a.overallSimilarity
-        : a.event.category.localeCompare(b.event.category);
+    if (a.overallSimilarity !== b.overallSimilarity) {
+      return b.overallSimilarity - a.overallSimilarity;
+    }
+    else if (a.event.category && b.event.category) {
+      return a.event.category.localeCompare(b.event.category);
     }
     else {
       return (
@@ -42,6 +43,7 @@ export const recommendEventsAlgorithm = (baseEvent: Event, allEvents: Event[]): 
       );
     }
   });
+  
 
   const filteredSimilarities = sortedSimilarities.filter(
     (similarity) => similarity.event !== baseEvent && similarity.overallSimilarity >= similarityThreshold
