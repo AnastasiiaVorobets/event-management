@@ -1,4 +1,4 @@
-- [Updated solution overview]()
+- [Updated solution overview](https://www.loom.com/share/4cdeed5a9bc44d5b9ff1b7863bb437fc?sid=a9b6ea2f-8283-46cf-83b4-46cac0e41018)
 
 - [An overview of the solution](https://www.loom.com/share/2d0b19aae68b48c6bc0e82bcf67301c3?sid=1af4794b-d0c3-4c42-a6a9-67ab0c8c6918)
 
