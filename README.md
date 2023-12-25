@@ -51,7 +51,7 @@
 - npm start
 - Open `http://localhost:4000/events`
 
-### Postgres
+### Postgresql
 - open pgAdmin 4
 - create database - event_management
 - in cd server - src/ormconfig.json and src/app.module.ts write your username and password
